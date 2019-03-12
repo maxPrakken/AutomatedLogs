@@ -48,6 +48,8 @@ int main() {
 		}
 	}
 
+	free(f);
+
 	return 0;
 }
 
