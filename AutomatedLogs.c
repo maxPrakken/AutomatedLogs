@@ -8,17 +8,26 @@
 
 typedef struct {
 	bool active;
-	char name[20];
-	char timeStart[8];
-	char timeStop[8];
+	char name[150];
+	char timeStart[15];
+	char timeStop[15];
 }ACTIVITY;
 
-int main() {
+ACTIVITY activities[20]; // max of 20 activities a day, i think you don't do much more than that in total
+int aCounter = 0;
 
-	time_t t = time(NULL);
-	struct tm tm = *localtime(&t);
+time_t secs;
+struct tm *local;
+char timeString[15];
+
+void Startd(), Add(), Stop(), Folder(), SaveCur(), GetTimeH();
+
+int main() {
 	
-	ACTIVITY activities[20]; // max of 20 activities a day, i think you don't do much more than that in total
+	secs = time(0);
+	local = localtime(&secs);
+
+	strftime(timeString, sizeof(timeString), "%H:%M:%S", local);
 
 	//printf("now: %d-%d-%d %d:%d:%d\n", tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday, tm.tm_hour, tm.tm_min, tm.tm_sec);
 
@@ -30,8 +39,6 @@ int main() {
 		stop[] = "stop",
 		folder[] = "folder",
 		savecur[] = "savecur";
-
-	void Startd(), Add(), Stop(), Folder(), SaveCur();
 
 	while (strcmp(f, stop) != 0) {
 		gets(f);
@@ -64,7 +71,21 @@ int main() {
 }
 
 void Startd() {
+	
+	fflush(stdout);
 
+	printf("what activity do you want to start? : ");
+	fflush(stdout);
+
+	activities[aCounter].active = true;
+	gets(activities[aCounter].name);
+
+	GetTimeH();
+	strcpy(activities[aCounter].timeStart, timeString);
+	printf("\nActivity started at: ");
+	printf(timeString);
+	printf("\n");
+	fflush(stdout);
 }
 
 void Add() {
@@ -72,7 +93,7 @@ void Add() {
 }
 
 void Stop() {
-
+	
 }
 
 void Folder(char path[]) {
@@ -84,5 +105,17 @@ void Folder(char path[]) {
 }
 
 void SaveCur() {
+	GetTimeH();
+	printf("activity ");
+	printf(activities[aCounter].name);
+	printf(" stopped.\n");
+	strcpy(activities[aCounter].timeStop, timeString);
+	fflush(stdout);
+	aCounter = aCounter + 1;
+}
 
+void GetTimeH() {
+	secs = time(0);
+	local = localtime(&secs);
+	strftime(timeString, sizeof(timeString), "%H:%M:%S", local);
 }
