@@ -12,7 +12,6 @@ int main() {
 
 	//printf("now: %d-%d-%d %d:%d:%d\n", tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday, tm.tm_hour, tm.tm_min, tm.tm_sec);
 
-	char* curInput[4];
 	char* f = malloc(7);
 	char path[100];
 
@@ -25,8 +24,7 @@ int main() {
 	void Startd(), Add(), Stop(), Folder(), SaveCur();
 
 	while (strcmp(f, stop) != 0) {
-		gets(curInput[0]);
-		strcpy(f, curInput[0]);
+		gets(f);
 		
 		if (strcmp(f, start) == 0) {
 			Startd();
