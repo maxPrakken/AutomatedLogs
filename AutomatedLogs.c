@@ -30,8 +30,16 @@ int main() {
 	strftime(timeString, sizeof(timeString), "%H:%M:%S", local);
 
 	//printf("now: %d-%d-%d %d:%d:%d\n", tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday, tm.tm_hour, tm.tm_min, tm.tm_sec);
+<<<<<<< HEAD
 
 	char* f = malloc(7);
+=======
+ 
+	char*caller = malloc(7),
+		arg1 = malloc(50),
+		arg2 = malloc(50),
+		arg3 = malloc(50);
+>>>>>>> 6417a48134e133296b911198e044115c2870d11d
 	char path[100];
 
 	char start[] = "start",
@@ -40,32 +48,46 @@ int main() {
 		folder[] = "folder",
 		savecur[] = "savecur";
 
+<<<<<<< HEAD
 	while (strcmp(f, stop) != 0) {
 		gets(f);
+=======
+	void Startd(), Add(), Stop(), Folder(), SaveCur();
+
+	while (strcmp(caller, stop) != 0) {
+		scanf("%c %c %c %c" ,caller, arg1, arg2, arg3);
+>>>>>>> 6417a48134e133296b911198e044115c2870d11d
 		
-		if (strcmp(f, start) == 0) {
+		if (strcmp(caller, start) == 0) {
 			Startd();
 		}
-		else if (strcmp(f, add) == 0) {
+		else if (strcmp(caller, add) == 0) {
 			Add();
 		}
-		else if (strcmp(f, folder) == 0) {
+		else if (strcmp(caller, folder) == 0) {
 			Folder(path);
 		}
-		else if (strcmp(f, savecur) == 0) {
+		else if (strcmp(caller, savecur) == 0) {
 			SaveCur();
 		}
-		else if (strcmp(f, "help") == 0) {
+		else if (strcmp(caller, "help") == 0) {
 			printf("\ncommands:\nstart : 'takes one argument, argument is\n the activity you're about to start.\n\nadd : takes three arguments, first is the activity, \nsecond is time started, third is time it ended.\n\nstop : has two options, 'current' and 'day', \ncurrent stops current activity, day stops the day.\n\nfolder : takes one argument, path where you want your .txt's and .pdf's stored.\n");
 			fflush(stdout);
 		}
-		else if(strcmp(f, "") == 0 || strcmp(f, stop)) {
+		else if(strcmp(caller, "") == 0 || strcmp(caller, stop)) {
 			printf("\nnot a valid command, type 'help' for more information\n");
 			fflush(stdout);
 		}
 	}
 
+<<<<<<< HEAD
 	free(f);
+=======
+	free(caller);
+	free(arg1);
+	free(arg2);
+	free(arg3);
+>>>>>>> 6417a48134e133296b911198e044115c2870d11d
 
 	return 0;
 }
