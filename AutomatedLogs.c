@@ -4,11 +4,21 @@
 #include <Windows.h>
 #include <direct.h>
 #include <time.h>
+#include <stdbool.h>
+
+typedef struct {
+	bool active;
+	char name[20];
+	char timeStart[8];
+	char timeStop[8];
+}ACTIVITY;
 
 int main() {
 
 	time_t t = time(NULL);
 	struct tm tm = *localtime(&t);
+	
+	ACTIVITY activities[20]; // max of 20 activities a day, i think you don't do much more than that in total
 
 	//printf("now: %d-%d-%d %d:%d:%d\n", tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday, tm.tm_hour, tm.tm_min, tm.tm_sec);
 
