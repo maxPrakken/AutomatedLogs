@@ -18,7 +18,7 @@ int aCounter = 0; // counter for activities array
 
 time_t secs; // time from epoch in secs
 struct tm *local; // local time info
-char timeString[15]; // char that gets time pushed in as char
+char timeString[15]; // char that gets time pushed in as 
 
 bool busy = false; // boolean that lets add know if it can add something or needs to wait for the current activity to stop
 
