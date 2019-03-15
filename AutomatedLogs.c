@@ -20,6 +20,8 @@ time_t secs; // time from epoch in secs
 struct tm *local; // local time info
 char timeString[15]; // char that gets time pushed in as char
 
+bool busy = false; // boolean that lets add know if it can add something or needs to wait for the current activity to stop
+
 void Startd(), Add(), Stop(), Folder(), SaveCur(), GetTimeH(); // void functions
 
 int main() {
@@ -47,7 +49,13 @@ int main() {
 			Startd(); // calls startd function
 		}
 		else if (strcmp(f, add) == 0) { // checks if f equals add
-			Add(); // calls add function
+			if (busy) { // checks if another activity was still running
+				printf("\nanother activity is still running, stop the current activity using 'stopcur' to end the activity\n");
+				fflush(stdout); // instantly prints out stdout
+			}
+			else { // if busy equals false it starts add()
+				Add(); // calls add function
+			}
 		}
 		else if (strcmp(f, folder) == 0) { // checks if f equals folder
 			Folder(path); // calls folder function and passes the path variable
@@ -64,8 +72,7 @@ int main() {
 			fflush(stdout); // instantly prints anything left on stdout aka the printf
 		}
 		else { // if stop is called is pressed
-			printf("test");
-			fflush(stdout);
+			Stop();
 		}
 	}
 
@@ -87,13 +94,41 @@ void Startd() {
 	GetTimeH(); // refreshes time in timeString
 	strcpy(activities[aCounter].timeStart, timeString); // copies timestring to activity timestart
 	printf("\nActivity started at: ");
-	printf(timeString);
+	printf(timeString); // prints the timestring
 	printf("\n");
 	fflush(stdout); // instantly prints stdout
+	busy = true; // sets busy to true to let the program know its running a activity
 }
 
 void Add() {
+	char starttime[15];
+	char stoptime[15];
 
+	fflush(stdout); // flushes stdout just in case
+
+	printf("what activity do you want to start? : ");
+	fflush(stdout); // instantly prints stdout
+
+	activities[aCounter].active = true; // sets the current activity to true
+	gets(activities[aCounter].name); // gets and sets activity name from the console
+
+	printf("\nType in the start time of the activity in this format 'Hour/Minute' without the punctuation marks:\n");
+	fflush(stdout); // instantly prints out stdout
+	gets(starttime); // puts console input into startime char[]
+	strcat(starttime, "/00"); // adds seconds to it to match syntax
+	strcpy(activities[aCounter].timeStart, starttime); // copies starttime into timeStart
+
+
+	printf("\nType in the end time of the activity in this format 'Hour/Minute' without the punctuation marks:\n");
+	fflush(stdout); // instantly prints out stdout
+	gets(stoptime); // puts console input into stoptime char[]
+	strcat(stoptime, "/00"); // adds seconds to it to match syntax
+	strcpy(activities[aCounter].timeStop, stoptime); // copies starttime into timeStart
+
+	printf("%s%s%s", "\nThe activity ", activities[aCounter].name, " has been added to the day.\n");
+	fflush(stdout); // instantly prints out stdout
+
+	aCounter = aCounter + 1; // adds one to aCounter
 }
 
 void Stop() {
@@ -116,6 +151,7 @@ void SaveCur() {
 	strcpy(activities[aCounter].timeStop, timeString); // copies timeString into activity timestop
 	fflush(stdout); // instantly prints stdout
 	aCounter = aCounter + 1; // adds one to aCounter
+	busy = false; // sets busy to false to let the program know its no longer running a activity
 }
 
 void GetTimeH() {
