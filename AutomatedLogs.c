@@ -63,6 +63,10 @@ int main() {
 			printf("\nnot a valid command, type 'help' for more information\n");
 			fflush(stdout); // instantly prints anything left on stdout aka the printf
 		}
+		else { // if stop is called is pressed
+			printf("test");
+			fflush(stdout);
+		}
 	}
 
 	free(f); // frees f variable from the stack
