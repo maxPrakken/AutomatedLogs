@@ -5,6 +5,7 @@
 #include <direct.h>
 #include <time.h>
 #include <stdbool.h>
+#include "ProcessChecker.c"
 
 typedef struct { // activity struct, has 4 variables that determen what you did and when
 	bool active;
@@ -25,6 +26,7 @@ bool busy = false; // boolean that lets add know if it can add something or need
 void Startd(), Add(), Stop(), Folder(), SaveCur(), GetTimeH(); // void functions
 
 int main() {
+	ProcessChecker();
 	
 	secs = time(0); // declare secs on epoch 
 	local = localtime(&secs); // get localtime with help of secs
@@ -64,7 +66,7 @@ int main() {
 			SaveCur(); // calls savecur function
 		}
 		else if (strcmp(f, "help") == 0) { // checks if f equals help
-			printf("\ncommands:\nstart : 'takes one argument, argument is\n the activity you're about to start.\n\nadd : takes three arguments, first is the activity, \nsecond is time started, third is time it ended.\n\nstop : has two options, 'current' and 'day', \ncurrent stops current activity, day stops the day.\n\nfolder : takes one argument, path where you want your .txt's and .pdf's stored.\n");
+			printf("\ncommands:\nstart : 'takes one argument, argument is\n the activity you're about to start.\n\nadd : takes three arguments, first is the activity, \nsecond is time started, third is time it ended.\n\nsavecur : stops the current activity\n\nstop : has two options, 'current' and 'day', \ncurrent stops current activity, day stops the day.\n\nfolder : takes one argument, path where you want your .txt's and .pdf's stored.\n");
 			fflush(stdout); // instantly prints anything left on stdout aka the printf
 		}
 		else if(strcmp(f, "") == 0 || strcmp(f, stop)) { // checks if f equals stop
